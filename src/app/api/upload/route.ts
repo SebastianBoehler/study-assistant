@@ -17,11 +17,17 @@ export async function POST(request: Request) {
     // Upload file to Google Cloud Storage
     const buffer = Buffer.from(await file.arrayBuffer());
     const blob = bucket.file(file.name);
-    await blob.save(buffer, {
+    
+    // Fix for AbortSignal issue in production build
+    const saveOptions = {
       metadata: {
         contentType: getMimeType(file.name)
-      }
-    });
+      },
+      // Explicitly set resumable to false to avoid AbortSignal issues in production
+      resumable: false
+    };
+    
+    await blob.save(buffer, saveOptions);
 
     // Return the GCS URI and other file info
     return NextResponse.json({

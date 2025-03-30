@@ -96,9 +96,12 @@ export default function Home() {
             <h1 className="text-3xl font-bold text-slate-900 mb-4">
               Welcome to Study Assistant
             </h1>
-            <p className="text-slate-600">
+            <p className="text-slate-600 mb-3">
               Upload your study materials in the sidebar to generate a personalized exam. 
               We support PDF, DOCX, TXT, and other common file formats.
+            </p>
+            <p className="text-slate-600 p-2 bg-blue-50 rounded-md border border-blue-100">
+              <strong>New:</strong> Math notation is now supported! Perfect for math, physics, engineering, and science exams.
             </p>
           </div>
         </div>

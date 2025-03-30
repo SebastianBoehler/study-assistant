@@ -78,7 +78,7 @@ export async function POST(request: Request) {
           },
           required: ["questions"]
         },
-        temperature: 0.2,
+        temperature: 0.7,
         max_output_tokens: 8192 * 2, // max is 65535 for 2.5 pro
         response_mime_type: "application/json"
       }

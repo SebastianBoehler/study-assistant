@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { MultipleChoiceQuestion, Question, ShortAnswerQuestion } from '@/hooks/types';
+import { MarkdownMath } from '@/components/ui/markdown-math';
 
 interface QuestionDisplayProps {
   exam: {
@@ -85,7 +86,7 @@ export function QuestionDisplay({ exam }: QuestionDisplayProps) {
       <div className="mb-8">
         <div>
           <h3 className="text-lg font-medium text-slate-900 mb-1">
-            {question.id}. {question.question}
+            {question.id}. <MarkdownMath content={question.question} />
           </h3>
           <p className="text-xs text-slate-500 italic mb-4">Source: {question.source}</p>
         </div>
@@ -125,7 +126,7 @@ export function QuestionDisplay({ exam }: QuestionDisplayProps) {
                   }`}>
                     {String.fromCharCode(65 + index)}
                   </div>
-                  <span className="text-slate-700">{option}</span>
+                  <span className="text-slate-700"><MarkdownMath content={option} /></span>
                 </div>
               </div>
             );
@@ -157,7 +158,7 @@ export function QuestionDisplay({ exam }: QuestionDisplayProps) {
       <div className="mb-8">
         <div>
           <h3 className="text-lg font-medium text-slate-900 mb-1">
-            {question.id}. {question.question}
+            {question.id}. <MarkdownMath content={question.question} />
           </h3>
           <p className="text-xs text-slate-500 italic mb-4">Source: {question.source}</p>
         </div>
@@ -194,9 +195,7 @@ export function QuestionDisplay({ exam }: QuestionDisplayProps) {
                 </button>
               </div>
               <div className={`prose prose-sm max-w-none ${!expandedAnswers[question.id] && question.modelAnswer.length > 300 ? 'line-clamp-3' : ''}`}>
-                {question.modelAnswer.split('\n').map((paragraph, index) => (
-                  <p key={index} className="mb-2">{paragraph}</p>
-                ))}
+                <MarkdownMath content={question.modelAnswer} />
               </div>
             </div>
           )}
