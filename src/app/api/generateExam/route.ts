@@ -10,7 +10,7 @@ interface FileInfo {
 
 export async function POST(request: Request) {
   try {
-    const { files } = await request.json() as { files: FileInfo[] };
+    const { files, language } = await request.json() as { files: FileInfo[]; language: string };
     
     if (!files || files.length === 0) {
       return NextResponse.json(
@@ -21,7 +21,9 @@ export async function POST(request: Request) {
 
     // Create request content with text and file parts
     const textPart = {
-      text: `Thats my course material. Help me studying by generating exam questions`
+      text: `Thats my course material. 
+      Help me studying by generating exam questions. 
+      Make the exam in "${language}" please`
     };
 
     const fileParts = files.map(file => ({

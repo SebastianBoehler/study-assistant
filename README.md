@@ -2,7 +2,7 @@
 
 A modern web application that helps you generate personalized exam questions from your study materials using Google Cloud Storage and Vertex AI. Upload your documents and get AI-generated questions to test your knowledge.
 
-![Study Assistant](https://via.placeholder.com/800x400?text=Study+Assistant)
+![Study Assistant Screenshot](/screenshots/image1.png)
 
 ## Features
 
@@ -12,6 +12,13 @@ A modern web application that helps you generate personalized exam questions fro
 - **Clean, Modern UI**: Beautiful and responsive interface with sidebar navigation
 - **Secure Cloud Storage**: Temporary file storage with Google Cloud Storage
 - **Real-time Status Updates**: Track upload and generation progress
+- **Multi-Language Support**: Generate exams in various languages including English, Spanish, German, French, and more
+
+## Multi-Language Support
+
+Study Assistant allows you to generate exams in multiple languages to support diverse learning needs:
+
+![Spanish Exam Example](/screenshots/spanish.png)
 
 ## Prerequisites
 
@@ -40,16 +47,17 @@ Before running the application, you need to:
      - Storage Object Admin (for bucket access)
      - AI Platform User (for Vertex AI access)
 5. Create and download a JSON key for the service account
+   - Download the JSON key and save it as `credentials.json` in the root directory
 
 ### Environment Variables
 
 Create a `.env.local` file in the root directory with the following variables:
 
 ```env
-GOOGLE_CLOUD_PROJECT=study-assistant-455223
-GOOGLE_CLOUD_BUCKET=study-assistant-uploads
+GOOGLE_CLOUD_PROJECT=your-project-id
+GOOGLE_CLOUD_BUCKET=your-bucket-name
 GOOGLE_CLOUD_KEY_PATH=./credentials.json
-GOOGLE_CLOUD_LOCATION=us-central1
+GOOGLE_CLOUD_LOCATION=your-location
 ```
 
 ## Installation

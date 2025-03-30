@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { FileUpload } from '@/components/ui/fileUpload';
 import { FileList } from '@/components/exam/fileList';
@@ -12,7 +12,7 @@ interface SidebarProps {
   error: string;
   onFilesSelected: (files: File[]) => Promise<void>;
   onRemoveFile: (index: number) => void;
-  onGenerateExam: () => Promise<void>;
+  onGenerateExam: (lang: string) => Promise<void>;
 }
 
 export function Sidebar({
@@ -23,25 +23,52 @@ export function Sidebar({
   onRemoveFile,
   onGenerateExam
 }: SidebarProps) {
+  const [language, setLanguage] = useState<string>('english');
+  
+  const handleLanguageChange = (newLanguage: string) => {
+    setLanguage(newLanguage);
+  };
+  
   return (
-    <div className="flex flex-col h-full">
+    <div className="flex flex-col md:h-full">
       <div className="pb-6 border-b border-slate-200">
         <p className="text-sm text-slate-600">
           Upload your study materials and generate personalized exam questions to test your knowledge.
         </p>
       </div>
       
-      <div className="flex-1 overflow-auto py-6">
+      <div className="flex-1 md:overflow-auto py-6">
         <FileUpload onFilesSelected={onFilesSelected} />
         
         <div className="mt-6">
           <FileList files={files} onRemove={onRemoveFile} />
         </div>
+        
+        <div className="mt-6">
+          <label htmlFor="language-select" className="block text-sm font-medium text-slate-700 mb-2">
+            Exam Language
+          </label>
+          <select
+            id="language-select"
+            value={language}
+            onChange={(e) => handleLanguageChange(e.target.value)}
+            className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            disabled={isGenerating}
+          >
+            <option value="english">English</option>
+            <option value="german">German</option>
+            <option value="spanish">Spanish</option>
+            <option value="french">French</option>
+            <option value="italian">Italian</option>
+            <option value="portuguese">Portuguese</option>
+            <option value="dutch">Dutch</option>
+          </select>
+        </div>
       </div>
       
       <div className="pt-4 border-t border-slate-200">
         <Button
-          onClick={onGenerateExam}
+          onClick={() => onGenerateExam(language)}
           isLoading={isGenerating}
           disabled={files.length === 0 || files.some(f => f.status === 'uploading')}
           className="w-full py-2"

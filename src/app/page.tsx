@@ -11,6 +11,7 @@ export default function Home() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [examData, setExamData] = useState<any>(null);
   const [error, setError] = useState<string>('');
+  const [language, setLanguage] = useState<string>('english');
 
   const handleFilesSelected = async (newFiles: File[]) => {
     const newFileInfos = newFiles.map(file => ({
@@ -41,8 +42,8 @@ export default function Home() {
   const handleRemoveFile = (index: number) => {
     setFiles(prev => prev.filter((_, i) => i !== index));
   };
-
-  const handleGenerateExam = async () => {
+  
+  const handleGenerateExam = async (lang: string) => {
     if (files.length === 0) {
       setError('Please select at least one file');
       return;
@@ -68,7 +69,8 @@ export default function Home() {
             name: f.file.name,
             gsUri: f.gsUri,
             mimeType: f.file.type
-          }))
+          })),
+          language: lang
         }),
       });
 
@@ -113,9 +115,9 @@ export default function Home() {
   };
 
   return (
-    <div className="flex w-full h-full">
-      {/* Sidebar */}
-      <div className="w-[320px] bg-white border-r border-slate-200 shadow-md overflow-auto">
+    <div className="flex flex-col md:flex-row w-full h-full">
+      {/* Sidebar - full width on mobile, fixed width on desktop */}
+      <div className="w-full md:w-[320px] bg-white border-b md:border-r md:border-b-0 border-slate-200 shadow-md overflow-auto">
         <div className="p-6 h-full">
           <Sidebar
             files={files}
@@ -128,8 +130,8 @@ export default function Home() {
         </div>
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 overflow-auto px-8 bg-white">
+      {/* Main Content - increased height on mobile */}
+      <div className="flex-1 overflow-auto px-4 md:px-8 bg-white min-h-[60vh] md:min-h-0">
         {renderContent()}
       </div>
     </div>
