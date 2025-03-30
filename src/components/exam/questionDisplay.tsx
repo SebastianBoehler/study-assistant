@@ -68,11 +68,11 @@ export function QuestionDisplay({ exam }: QuestionDisplayProps) {
     
     return (
       <div className="mb-8">
-        <div className="flex justify-between items-start">
-          <h3 className="text-lg font-medium text-slate-900 mb-2">
+        <div>
+          <h3 className="text-lg font-medium text-slate-900 mb-1">
             {question.id}. {question.question}
           </h3>
-          <span className="text-xs text-slate-500 italic">{question.source}</span>
+          <p className="text-xs text-slate-500 italic mb-4">Source: {question.source}</p>
         </div>
         
         <div className="mt-4 space-y-2">
@@ -127,11 +127,11 @@ export function QuestionDisplay({ exam }: QuestionDisplayProps) {
   const renderShortAnswerQuestion = (question: ShortAnswerQuestion) => {
     return (
       <div className="mb-8">
-        <div className="flex justify-between items-start">
-          <h3 className="text-lg font-medium text-slate-900 mb-2">
+        <div>
+          <h3 className="text-lg font-medium text-slate-900 mb-1">
             {question.id}. {question.question}
           </h3>
-          <span className="text-xs text-slate-500 italic">{question.source}</span>
+          <p className="text-xs text-slate-500 italic mb-4">Source: {question.source}</p>
         </div>
         
         <div className="mt-4">

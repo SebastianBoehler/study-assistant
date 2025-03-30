@@ -1,13 +1,10 @@
 'use client';
 
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { FileUpload } from '@/components/ui/fileUpload';
-import { FileList } from '@/components/exam/fileList';
-import { Layout } from '@/components/ui/layout';
 import { QuestionDisplay } from '@/components/exam/questionDisplay';
 import { FileInfo } from '@/hooks/types';
 import { uploadFile } from '@/hooks/utils';
+import { Sidebar } from '@/components/ui/sidebar';
 
 export default function Home() {
   const [files, setFiles] = useState<FileInfo[]>([]);
@@ -89,47 +86,15 @@ export default function Home() {
     }
   };
 
-  const renderSidebar = () => (
-    <div className="flex flex-col h-full space-y-6">
-      <div className="pb-6 border-b border-slate-200">
-        <p className="text-sm text-slate-600">
-          Upload your study materials and generate personalized exam questions to test your knowledge.
-        </p>
-      </div>
-      
-      <div className="flex-grow">
-        <FileUpload onFilesSelected={handleFilesSelected} />
-        
-        <div className="mt-6">
-          <FileList files={files} onRemove={handleRemoveFile} />
-        </div>
-      </div>
-      
-      <div className="pt-4 border-t border-slate-200">
-        <Button
-          onClick={handleGenerateExam}
-          isLoading={isGenerating}
-          disabled={files.length === 0 || files.some(f => f.status === 'uploading')}
-          className="w-full py-2"
-        >
-          {isGenerating ? 'Generating...' : 'Generate Exam'}
-        </Button>
-        {error && (
-          <p className="text-sm text-red-600 mt-2">{error}</p>
-        )}
-      </div>
-    </div>
-  );
-
   const renderContent = () => {
     if (!examData) {
       return (
-        <div className="flex items-center justify-center min-h-[calc(100vh-8rem)]">
-          <div className="text-center">
+        <div className="flex items-center justify-center h-full">
+          <div className="text-center max-w-lg">
             <h1 className="text-3xl font-bold text-slate-900 mb-4">
               Welcome to Study Assistant
             </h1>
-            <p className="text-slate-600 max-w-lg mx-auto">
+            <p className="text-slate-600">
               Upload your study materials in the sidebar to generate a personalized exam. 
               We support PDF, DOCX, TXT, and other common file formats.
             </p>
@@ -138,15 +103,35 @@ export default function Home() {
       );
     }
 
-    return <QuestionDisplay exam={examData} />;
+    return (
+      <div className="flex justify-center w-full h-full overflow-auto">
+        <div className="w-full max-w-4xl py-8">
+          <QuestionDisplay exam={examData} />
+        </div>
+      </div>
+    );
   };
 
   return (
-    <Layout
-      sidebar={renderSidebar()}
-      showSidebar={true}
-    >
-      {renderContent()}
-    </Layout>
+    <div className="flex w-full h-full">
+      {/* Sidebar */}
+      <div className="w-[320px] bg-white border-r border-slate-200 shadow-md overflow-auto">
+        <div className="p-6 h-full">
+          <Sidebar
+            files={files}
+            isGenerating={isGenerating}
+            error={error}
+            onFilesSelected={handleFilesSelected}
+            onRemoveFile={handleRemoveFile}
+            onGenerateExam={handleGenerateExam}
+          />
+        </div>
+      </div>
+
+      {/* Main Content */}
+      <div className="flex-1 overflow-auto p-8">
+        {renderContent()}
+      </div>
+    </div>
   );
 }
