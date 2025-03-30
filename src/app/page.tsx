@@ -129,7 +129,7 @@ export default function Home() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 overflow-auto p-8">
+      <div className="flex-1 overflow-auto p-8 bg-white">
         {renderContent()}
       </div>
     </div>

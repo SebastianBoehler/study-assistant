@@ -18,7 +18,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="h-full">
-      <body className={`${inter.className} h-full`}>
+      <body className={`${inter.className} h-full bg-white`}>
         <div className="flex flex-col h-full">
           {/* Header */}
           <header className="bg-white border-b border-slate-200 z-10">
@@ -30,7 +30,7 @@ export default function RootLayout({
           </header>
 
           {/* Main Content */}
-          <div className="flex-1 flex overflow-hidden">
+          <div className="flex-1 flex overflow-hidden bg-white">
             {children}
           </div>
 

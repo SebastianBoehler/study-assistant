@@ -78,7 +78,7 @@ export async function POST(request: Request) {
                   },
                   modelAnswer: { 
                     type: "STRING",
-                    description: "Model answer for short answer questions" 
+                    description: "Model answer for short answer questions in 3/4 sentences" 
                   },
                   source: {
                     type: "STRING",
