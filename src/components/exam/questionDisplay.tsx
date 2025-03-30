@@ -1,34 +1,5 @@
 import React, { useState } from 'react';
-
-interface QuestionOption {
-  index: number;
-  text: string;
-  isCorrect: boolean;
-}
-
-interface BaseQuestion {
-  id: number;
-  question: string;
-  source: string;
-  type: 'multiple_choice' | 'short_answer';
-}
-
-interface MultipleChoiceQuestion extends BaseQuestion {
-  type: 'multiple_choice';
-  options: string[];
-  correctOptionIndex: number;
-}
-
-interface ShortAnswerQuestion extends BaseQuestion {
-  type: 'short_answer';
-  modelAnswer: string;
-}
-
-type Question = MultipleChoiceQuestion | ShortAnswerQuestion;
-
-interface ExamData {
-  questions: Question[];
-}
+import { MultipleChoiceQuestion, Question, ShortAnswerQuestion } from '@/hooks/types';
 
 interface QuestionDisplayProps {
   exam: {
@@ -235,7 +206,7 @@ export function QuestionDisplay({ exam }: QuestionDisplayProps) {
   };
 
   return (
-    <div className="w-full max-w-4xl mx-auto bg-white rounded-lg shadow-lg p-8">
+    <div className="w-full max-w-4xl mx-auto bg-white rounded-lg p-8">
       <h1 className="text-2xl font-bold text-slate-900 mb-6">Generated Exam</h1>
       
       {score && (

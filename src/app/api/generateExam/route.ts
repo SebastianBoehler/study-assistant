@@ -21,18 +21,7 @@ export async function POST(request: Request) {
 
     // Create request content with text and file parts
     const textPart = {
-      text: `You are an expert exam generator. Based on the provided study materials, create a comprehensive exam with 5 questions.
-      Requirements:
-      1. Include a mix of multiple choice (2 questions) and short answer questions (3 questions)
-      2. Focus on testing understanding of key concepts and critical thinking
-      3. For multiple choice questions, provide 4 options and indicate the correct answer
-      4. For short answer questions, provide a model answer
-      5. Format the response as a JSON structure according to the provided schema
-      6. For each question, provide the source information in the format "PDF Name (page X)" where X is the page number
-
-      **Provide specific source citations for each question including the exact page number**
-      
-      Please analyze the content of the attached files and generate appropriate questions.`
+      text: `Thats my course material. Help me studying by generating exam questions`
     };
 
     const fileParts = files.map(file => ({
@@ -45,10 +34,6 @@ export async function POST(request: Request) {
     // Combine all parts
     const requestContent: GenerateContentRequest = {
       contents: [
-        // {
-        //   role: 'system',
-        //   parts: [{ text: 'You are an expert exam generator.' }]
-        // },
         {
           role: 'user',
           parts: [textPart, ...fileParts]
@@ -92,7 +77,7 @@ export async function POST(request: Request) {
           required: ["questions"]
         },
         temperature: 0.2,
-        max_output_tokens: 8192,
+        max_output_tokens: 8192 * 2, // max is 65535 for 2.5 pro
         response_mime_type: "application/json"
       }
     }
