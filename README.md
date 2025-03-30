@@ -125,7 +125,16 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-ISC
+This project is licensed under a custom non-commercial license:
+
+- You are free to use, modify, and publish copies of this software for personal use and individual academic research.
+- Institutional use, including use by educational institutions, universities, or other organizations, is prohibited without permission.
+- You may not use this software for commercial purposes without explicit permission from the author.
+- Any distribution must include attribution to the original author and must maintain this license.
+- The license terms may be updated at any time without prior notice.
+- This software is provided "as is" without warranty of any kind.
+
+See the [LICENSE](LICENSE) file for full details.
 
 ## Author
 

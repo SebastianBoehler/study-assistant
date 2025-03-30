@@ -39,7 +39,7 @@ export const generativeModel = vertexAI.preview.getGenerativeModel({
   // Optional parameters
   generation_config: {
     max_output_tokens: 1024,
-    temperature: 0.7,
+    temperature: 0.5,
   },
   // @ts-ignore
   systemInstruction: {
