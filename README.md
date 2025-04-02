@@ -1,6 +1,6 @@
 # Study Assistant
 
-A modern web application that helps you generate personalized exam questions from your study materials using Google Cloud Storage and Vertex AI. Upload your documents and get AI-generated questions to test your knowledge.
+A modern web application that helps you generate personalized exam questions from your study materials using Google Cloud Storage and AI. Upload your documents and get AI-generated questions to test your knowledge.
 
 ![Study Assistant Screenshot](/screenshots/image1.png)
 
@@ -13,6 +13,7 @@ A modern web application that helps you generate personalized exam questions fro
 - **Secure Cloud Storage**: Temporary file storage with Google Cloud Storage
 - **Real-time Status Updates**: Track upload and generation progress
 - **Multi-Language Support**: Generate exams in various languages including English, Spanish, German, French, and more
+- **LaTeX Math Support**: Render mathematical formulas and equations with LaTeX notation
 
 ## Multi-Language Support
 
@@ -118,6 +119,13 @@ bun dev
 4. **Review Generated Exam**:
    - View the generated exam questions in the main content area
    - Questions are tailored to the content of your uploaded materials
+   - Mathematical formulas are rendered using LaTeX notation
+
+## Planned Features
+
+- [ ] Export pre formatted for printing
+- [ ] Replace vertex ai with google-genai
+- [ ] Bring your own API key
 
 ## Contributing
 

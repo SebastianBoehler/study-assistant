@@ -37,7 +37,12 @@ export default function RootLayout({
           <footer className="bg-white border-t border-slate-200 py-4 z-10">
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <p className="text-center text-sm text-slate-500">
-                Made with ❤️ in Stuttgart by Sebastian Boehler
+                Made with ❤️ in Stuttgart by&nbsp;
+                <span className="hover:underline" title="Visit Sebastian Boehler's LinkedIn profile">
+                  <a href="https://www.linkedin.com/in/sebastian-boehler/" target="_blank" rel="noopener noreferrer">
+                    Sebastian Boehler
+                  </a>
+                </span>
               </p>
             </div>
           </footer>
