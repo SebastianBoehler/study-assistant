@@ -69,7 +69,10 @@ export const generativeModel = vertexAI.preview.getGenerativeModel({
          - $...$ or \\\\(...\\\\) for inline math
          - $$...$$  or \\\\[...\\\\] for display math
       
-      Make sure all mathematical expressions are properly formatted with LaTeX syntax
-    `}]
+      Make sure all mathematical expressions are properly formatted with LaTeX syntax.
+
+      Options for multiple choice can be realtive likely with small subtle differences.
+      Questions for multiple choice can be asked like "What is NOT correct?" to add complexity.
+     `}]
   },
 });

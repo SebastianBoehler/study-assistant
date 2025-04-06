@@ -8,9 +8,15 @@ interface FileInfo {
   mimeType: string;
 }
 
+interface RequestBody { 
+  files: FileInfo[]; 
+  language: string; 
+  level: string 
+};
+
 export async function POST(request: Request) {
   try {
-    const { files, language } = await request.json() as { files: FileInfo[]; language: string };
+    const { files, language, level } = await request.json() as RequestBody
     
     if (!files || files.length === 0) {
       return NextResponse.json(
@@ -23,7 +29,8 @@ export async function POST(request: Request) {
     const textPart = {
       text: `Thats my course material. 
       Help me studying by generating exam questions. 
-      Make the exam in "${language}" please`
+      Make the exam in "${language}" please. 
+      The level of the exam should be "${level}".`
     };
 
     const fileParts = files.map(file => ({
@@ -79,7 +86,7 @@ export async function POST(request: Request) {
           required: ["questions"]
         },
         temperature: 0.7,
-        max_output_tokens: 8192 * 2, // max is 65535 for 2.5 pro
+        max_output_tokens: 8192 * 3, // max is 65535 for 2.5 pro
         response_mime_type: "application/json"
       }
     }

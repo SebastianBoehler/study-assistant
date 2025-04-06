@@ -43,7 +43,7 @@ export default function Home() {
     setFiles(prev => prev.filter((_, i) => i !== index));
   };
   
-  const handleGenerateExam = async (lang: string) => {
+  const handleGenerateExam = async (language: string, level: string) => {
     if (files.length === 0) {
       setError('Please select at least one file');
       return;
@@ -70,7 +70,8 @@ export default function Home() {
             gsUri: f.gsUri,
             mimeType: f.file.type
           })),
-          language: lang
+          language,
+          level,
         }),
       });
 
