@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MultipleChoiceQuestion, Question, ShortAnswerQuestion } from '@/hooks/types';
 import { MarkdownMath } from '@/components/ui/markdown-math';
 
@@ -15,6 +15,17 @@ export function QuestionDisplay({ exam }: QuestionDisplayProps) {
   const [submittedAnswers, setSubmittedAnswers] = useState<boolean>(false);
   const [shortAnswers, setShortAnswers] = useState<Record<number, string>>({});
   const [score, setScore] = useState<{ correct: number, total: number } | null>(null);
+
+  useEffect(() => {
+    if (exam) {
+      setSubmittedAnswers(false);
+      setSelectedAnswers({});
+      setShowAnswers({});
+      setExpandedAnswers({});
+      setShortAnswers({});
+      setScore(null);
+    }
+  }, [exam]);
 
   const handleOptionSelect = (questionId: number, optionIndex: number) => {
     if (submittedAnswers) return; // Prevent changing answers after submission

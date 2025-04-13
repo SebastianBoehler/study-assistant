@@ -12,7 +12,7 @@ interface SidebarProps {
   error: string;
   onFilesSelected: (files: File[]) => Promise<void>;
   onRemoveFile: (index: number) => void;
-  onGenerateExam: (lang: string, level: string) => Promise<void>;
+  onGenerateExam: (lang: string, level: string, onlyMultipleChoice: boolean) => Promise<void>;
 }
 
 export function Sidebar({
@@ -25,6 +25,7 @@ export function Sidebar({
 }: SidebarProps) {
   const [language, setLanguage] = useState<string>('english');
   const [level, setLevel] = useState<string>('medium');
+  const [onlyMultipleChoice, setOnlyMultipleChoice] = useState<boolean>(false);
   
   const handleLanguageChange = (newLanguage: string) => {
     setLanguage(newLanguage);
@@ -81,11 +82,23 @@ export function Sidebar({
             <option value="hard">Hard</option>
           </select>
         </div>
+        <div className="mt-6">
+          <input 
+            type="checkbox"
+            id="only-multiple-choice"
+            checked={onlyMultipleChoice}
+            onChange={(e) => setOnlyMultipleChoice(e.target.checked)}
+            disabled={isGenerating}
+          />
+          <label htmlFor="only-multiple-choice" className="ml-2 text-md">
+            Only multiple choice
+          </label>
+        </div>
       </div>
       
       <div className="pt-4 border-t border-slate-200">
         <Button
-          onClick={() => onGenerateExam(language, level)}
+          onClick={() => onGenerateExam(language, level, onlyMultipleChoice)}
           isLoading={isGenerating}
           disabled={files.length === 0 || files.some(f => f.status === 'uploading')}
           className="w-full py-2"

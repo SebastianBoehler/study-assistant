@@ -11,12 +11,13 @@ interface FileInfo {
 interface RequestBody { 
   files: FileInfo[]; 
   language: string; 
-  level: string 
+  level: string;
+  onlyMultipleChoice: boolean;
 };
 
 export async function POST(request: Request) {
   try {
-    const { files, language, level } = await request.json() as RequestBody
+    const { files, language, level, onlyMultipleChoice } = await request.json() as RequestBody
     
     if (!files || files.length === 0) {
       return NextResponse.json(
@@ -30,8 +31,15 @@ export async function POST(request: Request) {
       text: `Thats my course material. 
       Help me studying by generating exam questions. 
       Make the exam in "${language}" please. 
-      The level of the exam should be "${level}".`
+      The level of the exam should be "${level}".
+      Generate at least 40 questions
+      `
     };
+
+    if (onlyMultipleChoice) {
+      textPart.text += ` 
+      Only generate multiple choice questions.`;
+    }
 
     const fileParts = files.map(file => ({
       fileData: {
@@ -85,8 +93,8 @@ export async function POST(request: Request) {
           },
           required: ["questions"]
         },
-        temperature: 0.7,
-        max_output_tokens: 8192 * 3, // max is 65535 for 2.5 pro
+        temperature: 0.3,
+        //max_output_tokens: 8192 * 4, // max is 65535 for 2.5 pro
         response_mime_type: "application/json"
       }
     }

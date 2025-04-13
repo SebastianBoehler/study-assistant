@@ -43,7 +43,7 @@ export default function Home() {
     setFiles(prev => prev.filter((_, i) => i !== index));
   };
   
-  const handleGenerateExam = async (language: string, level: string) => {
+  const handleGenerateExam = async (language: string, level: string, onlyMultipleChoice: boolean) => {
     if (files.length === 0) {
       setError('Please select at least one file');
       return;
@@ -72,6 +72,7 @@ export default function Home() {
           })),
           language,
           level,
+          onlyMultipleChoice
         }),
       });
 

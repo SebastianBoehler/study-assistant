@@ -49,7 +49,7 @@ export const generativeModel = vertexAI.preview.getGenerativeModel({
       Question asking is based on scientific principles and best practices to maintain and enhance learning.
       Ask questions in a way the student doesnt need more context to answer the question.
       Cover all topics in the uploaded documents.
-      Generate 70% multiple choice and 30% short answer questions.
+      Generate 70% multiple choice and 30% short answer questions if not otherwise specified.
 
       For multiple choice questions, provide 4 options and indicate the correct answer.
       For each question, provide the source information in the format "PDF Name (page X)" where X is the page number.
@@ -73,6 +73,9 @@ export const generativeModel = vertexAI.preview.getGenerativeModel({
 
       Options for multiple choice can be realtive likely with small subtle differences.
       Questions for multiple choice can be asked like "What is NOT correct?" to add complexity.
+
+      Make use of the full max token output.
+      Dont reference figures or graphics in questions as the student has no access to them.
      `}]
   },
 });
