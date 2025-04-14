@@ -1,4 +1,5 @@
 export interface FileInfo {
+    id: string; // Unique identifier for frontend state management
     file: File;
     gsUri?: string;
     status: 'uploading' | 'uploaded' | 'error';

@@ -81,7 +81,7 @@ export function FileUpload({ onFilesSelected }: FileUploadProps) {
           Drop files here or click to browse
         </p>
         <p className="text-xs text-slate-400">
-          PDF, DOCX, TXT, etc.
+          PDF, TXT, etc.
         </p>
       </div>
     </div>

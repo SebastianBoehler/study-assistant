@@ -14,7 +14,9 @@ export default function Home() {
   const [language, setLanguage] = useState<string>('english');
 
   const handleFilesSelected = async (newFiles: File[]) => {
+    // Add a unique id to each file
     const newFileInfos = newFiles.map(file => ({
+      id: crypto.randomUUID ? crypto.randomUUID() : `${Date.now()}-${Math.random()}`,
       file,
       status: 'uploading' as const
     }));
@@ -23,16 +25,11 @@ export default function Home() {
     setError('');
 
     // Upload each file
-    const uploadPromises = newFiles.map(async (file, index) => {
-      const result = await uploadFile(file);
-      
-      setFiles(prev => {
-        const newFiles = [...prev];
-        const currentIndex = prev.length - newFiles.length + index;
-        newFiles[currentIndex] = result;
-        return newFiles;
-      });
-
+    const uploadPromises = newFileInfos.map(async (fileInfo) => {
+      const result = await uploadFile(fileInfo.file);
+      setFiles(prev => prev.map(f =>
+        f.id === fileInfo.id ? { ...f, ...result } : f
+      ));
       return result;
     });
 
@@ -100,7 +97,7 @@ export default function Home() {
             </h1>
             <p className="text-slate-600 mb-3">
               Upload your study materials in the sidebar to generate a personalized exam. 
-              We support PDF, DOCX, TXT, and other common file formats.
+              We support PDF, TXT, and other common file formats.
             </p>
             <p className="text-slate-600 p-2 bg-blue-50 rounded-md border border-blue-100">
               <strong>New:</strong> Math notation is now supported! Perfect for math, physics, engineering, and science exams.
