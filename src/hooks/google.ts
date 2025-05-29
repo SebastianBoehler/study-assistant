@@ -1,23 +1,23 @@
-import { Storage } from '@google-cloud/storage';
-import { VertexAI } from '@google-cloud/vertexai';
+import { Storage } from "@google-cloud/storage";
+import { VertexAI } from "@google-cloud/vertexai";
 
 // Check for required environment variables
 if (!process.env.GOOGLE_CLOUD_PROJECT) {
-  throw new Error('GOOGLE_CLOUD_PROJECT environment variable is not defined');
+  throw new Error("GOOGLE_CLOUD_PROJECT environment variable is not defined");
 }
 
 if (!process.env.GOOGLE_CLOUD_BUCKET) {
-  throw new Error('GOOGLE_CLOUD_BUCKET environment variable is not defined');
+  throw new Error("GOOGLE_CLOUD_BUCKET environment variable is not defined");
 }
 
 if (!process.env.GOOGLE_CLOUD_LOCATION) {
-  throw new Error('GOOGLE_CLOUD_LOCATION environment variable is not defined');
+  throw new Error("GOOGLE_CLOUD_LOCATION environment variable is not defined");
 }
 
 // Initialize Google Cloud Storage
 export const storage = new Storage({
   projectId: process.env.GOOGLE_CLOUD_PROJECT,
-  keyFilename: process.env.GOOGLE_CLOUD_KEY_PATH || './credentials.json',
+  keyFilename: process.env.GOOGLE_CLOUD_KEY_PATH || "./credentials.json",
 });
 
 // Initialize bucket
@@ -29,13 +29,13 @@ export const vertexAI = new VertexAI({
   project: process.env.GOOGLE_CLOUD_PROJECT,
   location: process.env.GOOGLE_CLOUD_LOCATION,
   googleAuthOptions: {
-    keyFilename: process.env.GOOGLE_CLOUD_KEY_PATH || './credentials.json',
-  }
+    keyFilename: process.env.GOOGLE_CLOUD_KEY_PATH || "./credentials.json",
+  },
 });
 
 // Get the generative model
 export const generativeModel = vertexAI.preview.getGenerativeModel({
-  model: 'gemini-2.5-pro-exp-03-25',
+  model: "gemini-2.5-pro-preview-05-06",
   // Optional parameters
   // generation_config: {
   //   max_output_tokens: 1024,
@@ -43,8 +43,10 @@ export const generativeModel = vertexAI.preview.getGenerativeModel({
   // },
   // @ts-ignore
   systemInstruction: {
-    role: 'system',
-    parts: [{"text": `
+    role: "system",
+    parts: [
+      {
+        text: `
       You are an expert exam generator. An ask questions in a way to maximize understanding and critical thinking.
       Question asking is based on scientific principles and best practices to maintain and enhance learning.
       Ask questions in a way the student doesnt need more context to answer the question.
@@ -76,6 +78,8 @@ export const generativeModel = vertexAI.preview.getGenerativeModel({
 
       Make use of the full max token output.
       Dont reference figures or graphics in questions as the student has no access to them.
-     `}]
+     `,
+      },
+    ],
   },
 });
