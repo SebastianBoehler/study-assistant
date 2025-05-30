@@ -14,8 +14,7 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "@google-cloud/storage": "^7.16.0",
-    "@google-cloud/vertexai": "^0.2.1",
+    "@google/genai": "^1.2.0",
     "@tailwindcss/typography": "^0.5.16",
     "better-react-mathjax": "^2.3.0",
     "next": "14.0.4",

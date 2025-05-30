@@ -1,8 +1,8 @@
 import React from 'react';
-import { FileInfo } from '@/hooks/types';
+import { FileState, File as GeminiFile } from '@google/genai';
 
 interface FileListProps {
-  files: FileInfo[];
+  files: GeminiFile[];
   onRemove: (index: number) => void;
 }
 
@@ -17,7 +17,7 @@ export function FileList({ files, onRemove }: FileListProps) {
       <ul className="space-y-2 max-h-[300px] overflow-y-auto pr-1">
         {files.map((fileInfo, index) => (
           <li 
-            key={fileInfo.file.name + index} 
+            key={index} 
             className="flex items-center justify-between p-2.5 bg-white rounded-md border border-slate-200 hover:shadow-sm transition-shadow"
           >
             <div className="flex items-center space-x-2 min-w-0">
@@ -28,15 +28,15 @@ export function FileList({ files, onRemove }: FileListProps) {
               </div>
               <div className="min-w-0 flex-1">
                 <p className="text-xs font-medium text-slate-900 truncate">
-                  {fileInfo.file.name}
+                  {fileInfo.displayName}
                 </p>
                 <p className="text-xs text-slate-500">
-                  {(fileInfo.file.size / 1024).toFixed(1)} KB
+                  {(+(fileInfo.sizeBytes || 0) / 1024).toFixed(1)} KB
                 </p>
               </div>
             </div>
             <div className="flex items-center space-x-2">
-              {fileInfo.status === 'uploading' && (
+              {fileInfo.state !== FileState.ACTIVE && (
                 <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
                   <svg className="animate-spin -ml-0.5 mr-1.5 h-2 w-2 text-blue-800" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
@@ -45,7 +45,7 @@ export function FileList({ files, onRemove }: FileListProps) {
                   Uploading
                 </span>
               )}
-              {fileInfo.status === 'uploaded' && (
+              {fileInfo.state === FileState.ACTIVE && (
                 <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
                   <svg className="-ml-0.5 mr-1 h-2 w-2 text-green-800" fill="currentColor" viewBox="0 0 8 8">
                     <circle cx="4" cy="4" r="3" />
@@ -53,7 +53,7 @@ export function FileList({ files, onRemove }: FileListProps) {
                   Ready
                 </span>
               )}
-              {fileInfo.status === 'error' && (
+              {fileInfo.state === FileState.FAILED && (
                 <span className="inline-flex items-center px-1.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800">
                   <svg className="-ml-0.5 mr-1 h-2 w-2 text-red-800" fill="currentColor" viewBox="0 0 8 8">
                     <circle cx="4" cy="4" r="3" />

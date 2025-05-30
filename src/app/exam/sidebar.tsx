@@ -4,10 +4,11 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { FileUpload } from '@/components/ui/fileUpload';
 import { FileList } from '@/components/exam/fileList';
-import { FileInfo } from '@/hooks/types';
+import { FileState, File as GeminiFile } from '@google/genai';
 
 interface SidebarProps {
-  files: FileInfo[];
+  files: GeminiFile[];
+  hasApiKey: boolean;
   isGenerating: boolean;
   error: string;
   onFilesSelected: (files: File[]) => Promise<void>;
@@ -17,6 +18,7 @@ interface SidebarProps {
 
 export function Sidebar({
   files,
+  hasApiKey,
   isGenerating,
   error,
   onFilesSelected,
@@ -100,7 +102,7 @@ export function Sidebar({
         <Button
           onClick={() => onGenerateExam(language, level, onlyMultipleChoice)}
           isLoading={isGenerating}
-          disabled={files.length === 0 || files.some(f => f.status === 'uploading')}
+          disabled={files.length === 0 || files.some(f => f.state !== FileState.ACTIVE) || !hasApiKey}
           className="w-full py-2"
         >
           {isGenerating ? 'Generating...' : 'Generate Exam'}

@@ -1,85 +1,75 @@
-import { Storage } from "@google-cloud/storage";
-import { VertexAI } from "@google-cloud/vertexai";
+import { GoogleGenAI, File as GeminiFile, Part, createUserContent, createPartFromUri, GenerateContentConfig, GenerateContentParameters } from "@google/genai";
 
-// Check for required environment variables
-if (!process.env.GOOGLE_CLOUD_PROJECT) {
-  throw new Error("GOOGLE_CLOUD_PROJECT environment variable is not defined");
-}
+export const uploadFile = async (file: File, apiKey: string): Promise<GeminiFile> => {
+  const ai = new GoogleGenAI({ apiKey: apiKey });
+  const result = await ai.files.upload({ file: file, config: { displayName: file.name } });
 
-if (!process.env.GOOGLE_CLOUD_BUCKET) {
-  throw new Error("GOOGLE_CLOUD_BUCKET environment variable is not defined");
-}
+  return result;
+};
 
-if (!process.env.GOOGLE_CLOUD_LOCATION) {
-  throw new Error("GOOGLE_CLOUD_LOCATION environment variable is not defined");
-}
-
-// Initialize Google Cloud Storage
-export const storage = new Storage({
-  projectId: process.env.GOOGLE_CLOUD_PROJECT,
-  keyFilename: process.env.GOOGLE_CLOUD_KEY_PATH || "./credentials.json",
-});
-
-// Initialize bucket
-export const bucketName = process.env.GOOGLE_CLOUD_BUCKET;
-export const bucket = storage.bucket(bucketName);
-
-// Initialize Vertex AI
-export const vertexAI = new VertexAI({
-  project: process.env.GOOGLE_CLOUD_PROJECT,
-  location: process.env.GOOGLE_CLOUD_LOCATION,
-  googleAuthOptions: {
-    keyFilename: process.env.GOOGLE_CLOUD_KEY_PATH || "./credentials.json",
-  },
-});
-
-// Get the generative model
-export const generativeModel = vertexAI.preview.getGenerativeModel({
-  model: "gemini-2.5-pro-preview-05-06",
-  // Optional parameters
-  // generation_config: {
-  //   max_output_tokens: 1024,
-  //   temperature: 0.5,
-  // },
-  // @ts-ignore
-  systemInstruction: {
-    role: "system",
-    parts: [
-      {
-        text: `
-      You are an expert exam generator. An ask questions in a way to maximize understanding and critical thinking.
-      Question asking is based on scientific principles and best practices to maintain and enhance learning.
-      Ask questions in a way the student doesnt need more context to answer the question.
-      Cover all topics in the uploaded documents.
-      Generate 70% multiple choice and 30% short answer questions if not otherwise specified.
-
-      For multiple choice questions, provide 4 options and indicate the correct answer.
-      For each question, provide the source information in the format "PDF Name (page X)" where X is the page number.
-      
-      IMPORTANT: For math topics, use LaTeX mathematical notation for formulas, equations, and mathematical symbols.
-      The application supports markdown and LaTeX rendering, so you can use:
-      - Inline math with $...$ or \\\\(...\\\\) syntax (e.g., $E = mc^2$ or \\\\(E = mc^2\\\\))
-      - Display math with $$...$$  or \\\\[...\\\\] syntax (e.g., $$\\\\int_0^\\\\infty e^{-x^2} dx = \\\\frac{\\\\sqrt{\\\\pi}}{2}$$ or \\\\[\\\\int_0^\\\\infty e^{-x^2} dx = \\\\frac{\\\\sqrt{\\\\pi}}{2}\\\\])
-      - Standard markdown formatting for text (bold, italic, lists, etc.)
-      
-      IMPORTANT FORMATTING INSTRUCTIONS:
-      1. When using LaTeX commands, always use double backslashes. For example:
-         - Use \\\\alpha (not \\alpha) for α
-         - Use \\\\beta (not \\beta) for β
-         - Use \\\\frac{a}{b} (not \\frac{a}{b}) for fractions
-      2. For delimiters, use:
-         - $...$ or \\\\(...\\\\) for inline math
-         - $$...$$  or \\\\[...\\\\] for display math
-      
-      Make sure all mathematical expressions are properly formatted with LaTeX syntax.
-
-      Options for multiple choice can be realtive likely with small subtle differences.
-      Questions for multiple choice can be asked like "What is NOT correct?" to add complexity.
-
-      Make use of the full max token output.
-      Dont reference figures or graphics in questions as the student has no access to them.
-     `,
+const responseSchema = {
+  type: "OBJECT",
+  properties: {
+    questions: {
+      type: "ARRAY",
+      items: {
+        type: "OBJECT",
+        properties: {
+          id: { type: "INTEGER" },
+          type: { type: "STRING", enum: ["multiple_choice", "short_answer"] },
+          question: { type: "STRING" },
+          options: {
+            type: "ARRAY",
+            items: { type: "STRING" },
+            description: "Array of 4 options for multiple choice questions",
+          },
+          correctOptionIndex: {
+            type: "INTEGER",
+            description: "Index (0-3) of the correct option for multiple choice questions",
+          },
+          modelAnswer: {
+            type: "STRING",
+            description: "Model answer for short answer questions in 3/4 sentences",
+          },
+          source: {
+            type: "STRING",
+            description: "Source information in the format 'PDF Name (page X)' where X is the page number",
+          },
+        },
+        required: ["id", "type", "question", "source"],
       },
-    ],
+    },
   },
-});
+  required: ["questions"],
+};
+
+export const generateExam = async (apiKey: string, files: GeminiFile[], language: string, level: string, onlyMultipleChoice: boolean): Promise<any> => {
+  const ai = new GoogleGenAI({ apiKey: apiKey });
+  const contents = createUserContent([
+    `Generate an exam in ${language} for ${level} level. ${onlyMultipleChoice ? "Only multiple choice questions." : ""}`,
+    // map files
+    ...files.map((f) => createPartFromUri(f.uri!, f.mimeType!)),
+  ]);
+  console.log(contents, files);
+  const config: GenerateContentConfig = {
+    responseMimeType: "application/json",
+    temperature: 0.7,
+    responseSchema,
+  };
+  const params: GenerateContentParameters = {
+    model: "gemini-2.0-flash",
+    contents,
+    config,
+  };
+  const result = await ai.models.generateContent(params);
+  const candidate = result.candidates?.[0];
+  if (!candidate) {
+    throw new Error("No candidate found");
+  }
+  const raw = candidate.content?.parts?.[0].text;
+  if (!raw) {
+    throw new Error("No raw content found");
+  }
+  console.log(raw);
+  return JSON.parse(raw);
+};

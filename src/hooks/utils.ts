@@ -36,34 +36,3 @@ export function getMimeType(filename: string): string {
       return "application/octet-stream";
   }
 }
-
-export const uploadFile = async (file: File): Promise<FileInfo> => {
-  const formData = new FormData();
-  formData.append("file", file);
-
-  try {
-    const response = await fetch("/api/upload", {
-      method: "POST",
-      body: formData,
-    });
-
-    if (!response.ok) {
-      throw new Error("Upload failed");
-    }
-
-    const data = await response.json();
-    return {
-      file,
-      gsUri: data.gsUri,
-      status: "uploaded",
-      id: file.name,
-    };
-  } catch (err) {
-    return {
-      file,
-      status: "error",
-      error: "Failed to upload file",
-      id: file.name,
-    };
-  }
-};
