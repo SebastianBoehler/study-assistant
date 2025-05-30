@@ -28,23 +28,41 @@ export default function LandingPage() {
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 overflow-auto px-4 md:px-8 bg-slate-50 min-h-[60vh] md:min-h-0 flex items-center justify-center"> {/* Added bg-slate-50 and centering for content */}
-        <div className="max-w-2xl mx-auto py-12 text-center"> {/* Centering content and text */}
-          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">
-            Welcome to Study Assistant
+      <div className="flex-1 overflow-auto px-4 md:px-8 bg-slate-50 min-h-[60vh] md:min-h-0 flex flex-col items-center justify-center"> {/* Ensure vertical stacking for sections */}
+        <div className="max-w-2xl w-full mx-auto py-12 text-center"> {/* Centering content and text, ensure full width for children */}
+          <h1 className="text-4xl md:text-5xl font-bold text-slate-900 mb-10">
+            Unlock Your Learning Potential
           </h1>
-          <p className="text-lg text-slate-700 mb-4">
-            Your personal AI-powered tool to generate practice exams from your study materials. Upload PDFs, text files, and more, then let Study Assistant help you prepare!
-          </p>
-          <p className="text-lg text-slate-700 mb-8">
-            Customize your exams by difficulty level. Language preferences can be configured in the settings.
-          </p>
-          <Link
-            href="/exam"
-            className="inline-flex items-center justify-center rounded-lg font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 h-12 px-8 text-lg mt-4 shadow-md hover:shadow-lg" // Enhanced styling
-          >
-            Get Started
-          </Link>
+
+          {/* AI Exam Generation Section */}
+          <div className="my-8 p-6 bg-white rounded-xl shadow-xl text-left"> {/* Enhanced shadow, rounded corners, text-left for content inside card */}
+            <h2 className="text-3xl font-semibold text-slate-800 mb-4">AI Exam Generation</h2>
+            <p className="text-slate-600 mb-6">
+              Upload your study materials (PDFs, text files) and instantly generate custom practice exams. Test your knowledge, identify areas for improvement, and accelerate your learning.
+            </p>
+            <Link
+              href="/exam"
+              className="inline-flex items-center justify-center rounded-lg text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800 h-11 px-8 shadow-md hover:shadow-lg"
+            >
+              Create an Exam
+            </Link>
+          </div>
+
+          {/* Personalized Learning Plans Section */}
+          <div className="my-8 p-6 bg-white rounded-xl shadow-xl text-left"> {/* Enhanced shadow, rounded corners, text-left for content inside card */}
+            <h2 className="text-3xl font-semibold text-slate-800 mb-4">Personalized Learning Plans</h2>
+            <p className="text-slate-600 mb-6">
+              Coming Soon: Let our AI analyze your learning goals and materials to create a tailored study schedule, resource recommendations, and progress tracking to keep you on the path to success.
+            </p>
+            <button
+              type="button"
+              className="inline-flex items-center justify-center rounded-lg text-base font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 bg-slate-400 text-white h-11 px-8 opacity-50 cursor-not-allowed shadow-md"
+              disabled
+            >
+              Coming Soon
+            </button>
+          </div>
+
         </div>
       </div>
     </div>
