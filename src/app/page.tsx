@@ -1,13 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import Header from '@/components/layout/Header'; // Import the new Header
 
 export default function LandingPage() {
   return (
-    <div className="flex flex-col min-h-screen bg-slate-50"> {/* Ensure page takes full height and has a base bg color */}
-      <Header />
-
+    <div className="flex flex-col min-h-screen bg-slate-50 w-full overflow-x-hidden"> {/* Ensure page takes full height, full width, and prevent horizontal overflow */}
       <main className="flex-1"> {/* Main content area will take remaining space */}
         {/* A. Hero Section */}
         <section className="bg-gradient-to-r from-blue-600 to-indigo-700 text-white py-20 md:py-32">

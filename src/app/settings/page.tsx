@@ -8,21 +8,18 @@ import { Button } from '@/components/ui/button';
 export default function SettingsPage() {
   const { apiKey, setApiKey, language, setLanguage } = useContext(ApiKeyContext);
   const [key, setKey] = useState<string>(apiKey);
+  const [languageState, setLanguageState] = useState<string>(language);
 
   useEffect(() => {
     setKey(apiKey);
-  }, [apiKey]);
+    setLanguageState(language);
+  }, [apiKey, language]);
 
-  const handleSaveApiKey = () => {
+  const handleSave = () => {
     setApiKey(key);
+    setLanguage(languageState);
     // Consider a more robust notification system in a real app
-    alert('API key saved!');
-  };
-
-  const handleLanguageChange = (newLanguage: string) => {
-    setLanguage(newLanguage);
-    // In a real app, you might want to save this preference (e.g., localStorage or backend)
-    console.log('Language changed to:', newLanguage);
+    alert('Settings saved!');
   };
 
   return (
@@ -67,9 +64,6 @@ export default function SettingsPage() {
               className="w-full max-w-md px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             />
           </div>
-          <Button onClick={handleSaveApiKey} className="px-6 py-2">
-            Save API Key
-          </Button>
         </section>
 
         {/* Language Settings */}
@@ -81,8 +75,8 @@ export default function SettingsPage() {
             </label>
             <select
               id="language-select"
-              value={language}
-              onChange={(e) => handleLanguageChange(e.target.value)}
+              value={languageState}
+              onChange={(e) => setLanguageState(e.target.value)}
               className="w-full max-w-md px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
             >
               <option value="english">English</option>
@@ -97,6 +91,9 @@ export default function SettingsPage() {
           {/* The selected language is currently only logged to the console.
               Further integration would be needed to make it affect the application. */}
         </section>
+        <Button onClick={handleSave} className="px-6 py-2">
+          Save
+        </Button>
       </div>
     </div>
   );

@@ -25,6 +25,8 @@ export const ApiKeyProvider = ({ children }: { children: ReactNode }) => {
   useEffect(() => {
     const storedKey = typeof window !== 'undefined' ? localStorage.getItem(localStorageKey) : null;
     if (storedKey) setApiKeyState(storedKey);
+    const storedLanguage = typeof window !== 'undefined' ? localStorage.getItem(localStorageLanguageKey) : null;
+    if (storedLanguage) setLanguageState(storedLanguage);
   }, []);
 
   const setApiKey = (key: string) => {

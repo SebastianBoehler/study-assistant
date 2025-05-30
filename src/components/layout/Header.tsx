@@ -8,9 +8,7 @@ export default function Header() {
       <nav className="container mx-auto px-4 sm:px-6 py-4 flex justify-between items-center">
         {/* Logo/Site Title */}
         <Link href="/" legacyBehavior>
-          <a className="text-2xl font-bold text-slate-800 hover:text-blue-700 transition-colors">
-            StudyAssistant
-          </a>
+          <h1 className="text-xl font-bold text-blue-600">Study Assistant</h1>
         </Link>
 
         {/* Navigation Links */}
