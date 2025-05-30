@@ -4,6 +4,7 @@ import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ApiKeyProvider } from '@/context/ApiKeyContext';
 import Header from '@/components/layout/Header';
+import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -44,6 +45,7 @@ export default function RootLayout({
             </footer>
           </div>
         </ApiKeyProvider>
+        <Analytics />
       </body>
     </html>
   )

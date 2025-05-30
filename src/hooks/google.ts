@@ -63,7 +63,7 @@ export const generateExam = async (
     responseSchema,
   };
   const params: GenerateContentParameters = {
-    model: "gemini-2.0-flash", // Updated model
+    model: "gemini-2.5-pro-preview-05-06", // Updated model
     contents,
     config,
   };
