@@ -13,7 +13,7 @@ interface SidebarProps {
   error: string;
   onFilesSelected: (files: File[]) => Promise<void>;
   onRemoveFile: (index: number) => void;
-  onGenerateExam: (lang: string, level: string, onlyMultipleChoice: boolean) => Promise<void>;
+  onGenerateExam: (level: string, onlyMultipleChoice: boolean) => Promise<void>;
 }
 
 export function Sidebar({
@@ -25,13 +25,8 @@ export function Sidebar({
   onRemoveFile,
   onGenerateExam
 }: SidebarProps) {
-  const [language, setLanguage] = useState<string>('english');
   const [level, setLevel] = useState<string>('medium');
   const [onlyMultipleChoice, setOnlyMultipleChoice] = useState<boolean>(false);
-  
-  const handleLanguageChange = (newLanguage: string) => {
-    setLanguage(newLanguage);
-  };
   
   return (
     <div className="flex flex-col md:h-full">
@@ -48,26 +43,6 @@ export function Sidebar({
           <FileList files={files} onRemove={onRemoveFile} />
         </div>
         
-        <div className="mt-6">
-          <label htmlFor="language-select" className="block text-sm font-medium text-slate-700 mb-2">
-            Exam Language
-          </label>
-          <select
-            id="language-select"
-            value={language}
-            onChange={(e) => handleLanguageChange(e.target.value)}
-            className="w-full px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
-            disabled={isGenerating}
-          >
-            <option value="english">English</option>
-            <option value="german">German</option>
-            <option value="spanish">Spanish</option>
-            <option value="french">French</option>
-            <option value="italian">Italian</option>
-            <option value="portuguese">Portuguese</option>
-            <option value="dutch">Dutch</option>
-          </select>
-        </div>
         <div className="mt-6">
           <label htmlFor="level-select" className="block text-sm font-medium text-slate-700 mb-2">
             Exam Level
@@ -100,7 +75,7 @@ export function Sidebar({
       
       <div className="pt-4 border-t border-slate-200">
         <Button
-          onClick={() => onGenerateExam(language, level, onlyMultipleChoice)}
+          onClick={() => onGenerateExam(level, onlyMultipleChoice)}
           isLoading={isGenerating}
           disabled={files.length === 0 || files.some(f => f.state !== FileState.ACTIVE) || !hasApiKey}
           className="w-full py-2"

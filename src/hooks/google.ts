@@ -43,10 +43,16 @@ const responseSchema = {
   required: ["questions"],
 };
 
-export const generateExam = async (apiKey: string, files: GeminiFile[], language: string, level: string, onlyMultipleChoice: boolean): Promise<any> => {
+export const generateExam = async (
+  apiKey: string,
+  files: GeminiFile[],
+  level: string,
+  onlyMultipleChoice: boolean,
+  language: string = "english"
+): Promise<any> => {
   const ai = new GoogleGenAI({ apiKey: apiKey });
   const contents = createUserContent([
-    `Generate an exam in ${language} for ${level} level. ${onlyMultipleChoice ? "Only multiple choice questions." : ""}`,
+    `Generate an exam with at least 40 questions in ${language} for ${level} level. ${onlyMultipleChoice ? "Only multiple choice questions." : ""}`,
     // map files
     ...files.map((f) => createPartFromUri(f.uri!, f.mimeType!)),
   ]);
@@ -57,7 +63,7 @@ export const generateExam = async (apiKey: string, files: GeminiFile[], language
     responseSchema,
   };
   const params: GenerateContentParameters = {
-    model: "gemini-2.0-flash",
+    model: "gemini-2.5-pro-preview-05-06", // Updated model
     contents,
     config,
   };

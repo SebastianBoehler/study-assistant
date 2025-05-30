@@ -3,6 +3,8 @@ import 'katex/dist/katex.min.css'
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ApiKeyProvider } from '@/context/ApiKeyContext';
+import Header from '@/components/layout/Header';
+import { Analytics } from "@vercel/analytics/next"
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -22,14 +24,7 @@ export default function RootLayout({
         <ApiKeyProvider>
           <div className="flex flex-col h-full">
             {/* Header */}
-            <header className="bg-white border-b border-slate-200 z-10">
-              <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex justify-center items-center h-16">
-                  <h1 className="text-xl font-bold text-blue-600">Study Assistant</h1>
-                </div>
-              </div>
-            </header>
-
+            <Header />
             {/* Main Content */}
             <div className="flex-1 flex overflow-hidden bg-white">
               {children}
@@ -50,6 +45,7 @@ export default function RootLayout({
             </footer>
           </div>
         </ApiKeyProvider>
+        <Analytics />
       </body>
     </html>
   )

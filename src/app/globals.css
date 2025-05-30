@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+body {
+  overflow-x: hidden;
+  width: 100vw;
+}
+
+html, body {
+  min-height: 100%;
+  height: auto;
+  /* Ensure vertical scrolling is possible */
+  overflow-y: auto;
+}
+
+
 :root {
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
