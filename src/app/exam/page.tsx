@@ -40,7 +40,7 @@ export default function Home() {
     setFiles(prev => prev.filter((_, i) => i !== index));
   };
   
-  const handleGenerateExam = async (language: string, level: string, onlyMultipleChoice: boolean) => {
+  const handleGenerateExam = async (level: string, onlyMultipleChoice: boolean) => {
     if (files.length === 0) {
       setError('Please select at least one file');
       return;
@@ -56,7 +56,7 @@ export default function Home() {
     setError('');
 
     try {
-      const result = await generateExam(apiKey, uploadedFiles, language, level, onlyMultipleChoice);
+      const result = await generateExam(apiKey, uploadedFiles, level, onlyMultipleChoice);
       console.log(result);
       setExamData(result);
     } catch (err) {
