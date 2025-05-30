@@ -24,30 +24,8 @@ export default function SettingsPage() {
 
   return (
     <div className="flex flex-col md:flex-row w-full h-full">
-      {/* Sidebar */}
-      <div className="w-full md:w-[320px] bg-white border-b md:border-r md:border-b-0 border-slate-200 shadow-md overflow-auto">
-        <div className="p-6 h-full">
-          <h2 className="text-xl font-semibold mb-4 text-slate-800">Navigation</h2>
-          <nav className="space-y-2">
-            <Link href="/" legacyBehavior>
-              <a className="block px-3 py-2 text-slate-700 hover:bg-slate-100 rounded-md">
-                Home
-              </a>
-            </Link>
-            <Link href="/exam" legacyBehavior>
-              <a className="block px-3 py-2 text-slate-700 hover:bg-slate-100 rounded-md">
-                Exam
-              </a>
-            </Link>
-            {/* Add more navigation links here if needed */}
-          </nav>
-        </div>
-      </div>
-
       {/* Main Content */}
       <div className="flex-1 overflow-auto px-4 md:px-8 bg-white min-h-[60vh] md:min-h-0 py-6">
-        <h1 className="text-3xl font-bold mb-8 text-slate-800">Settings</h1>
-
         {/* API Key Settings */}
         <section className="mb-10">
           <h2 className="text-2xl font-semibold mb-6 text-slate-700">API Key Configuration</h2>
