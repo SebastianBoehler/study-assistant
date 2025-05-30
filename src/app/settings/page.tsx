@@ -6,9 +6,8 @@ import { ApiKeyContext } from '@/context/ApiKeyContext';
 import { Button } from '@/components/ui/button';
 
 export default function SettingsPage() {
-  const { apiKey, setApiKey } = useContext(ApiKeyContext);
+  const { apiKey, setApiKey, language, setLanguage } = useContext(ApiKeyContext);
   const [key, setKey] = useState<string>(apiKey);
-  const [language, setLanguage] = useState<string>('english');
 
   useEffect(() => {
     setKey(apiKey);
