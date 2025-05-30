@@ -73,11 +73,10 @@ export default function Home() {
         <div className="flex items-center justify-center h-full">
           <div className="text-center max-w-lg">
             <h1 className="text-3xl font-bold text-slate-900 mb-4">
-              Welcome to Study Assistant
+              Create Your Custom Exam
             </h1>
             <p className="text-slate-600 mb-3">
-              Upload your study materials in the sidebar to generate a personalized exam. 
-              We support PDF, TXT, and other common file formats.
+              Upload your study materials via the sidebar, choose your settings, and generate a custom exam.
             </p>
             <p className="text-slate-600 p-2 bg-blue-50 rounded-md border border-blue-100">
               <strong>New:</strong> Math notation is now supported! Perfect for math, physics, engineering, and science exams.
