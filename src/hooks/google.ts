@@ -83,6 +83,9 @@ Exam levels: Easy, Medium, Hard, Expert
 If expert level is selected, generate questions that are hard to answer and require extensive thinking 
 and deep knowledge to answer.
 
+When appropiate you can formulate questions like cases:
+You are in role of xy how would you solve that according to ... ?
+
 `,
   };
   const params: GenerateContentParameters = {
