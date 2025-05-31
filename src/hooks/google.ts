@@ -69,6 +69,7 @@ Rules:
 - Only generate questions based on the study materials provided.
 - All questions **must** be based on the study materials provided.
 - Use teminology that is used in the study materials.
+- DO NOT include source in the question as there is an extra field for it.
 
 Apply scientific proven method for studying to maximazie learning effect and retention like:
 - Spaced repetition
