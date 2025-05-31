@@ -11,6 +11,23 @@ const inter = Inter({ subsets: ['latin'] })
 export const metadata: Metadata = {
   title: 'Study Assistant',
   description: 'Generate exams from your study materials',
+  keywords: ['study assistant', 'exam generator', 'study materials', 'exam preparation', 'study materials', 'ai exam generator', 'ai study assistant'],
+  authors: [
+    {
+      name: 'Sebastian Boehler',
+      url: 'https://www.linkedin.com/in/sebastian-boehler/',
+    },
+  ],
+  openGraph: {
+    title: 'Study Assistant',
+    description: 'Generate exams from your study materials',
+    type: 'website',
+    locale: 'en_US',
+    siteName: 'Study Assistant',
+    url: 'https://study.sebastian-boehler.com',
+  },
+  creator: 'Sebastian Boehler',
+  generator: 'Next.js',
 }
 
 export default function RootLayout({

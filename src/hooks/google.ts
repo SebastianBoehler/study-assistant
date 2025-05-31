@@ -59,7 +59,7 @@ export const generateExam = async (
   console.log(contents, files);
   const config: GenerateContentConfig = {
     responseMimeType: "application/json",
-    temperature: 0.7,
+    temperature: 0.8,
     responseSchema,
     systemInstruction: `
 You are a helpful teaching assistant that can generate exams based on study materials.
@@ -102,6 +102,5 @@ You are in role of xy how would you solve that according to ... ?
   if (!raw) {
     throw new Error("No raw content found");
   }
-  console.log(raw);
   return JSON.parse(raw);
 };
