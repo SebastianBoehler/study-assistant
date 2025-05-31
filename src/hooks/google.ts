@@ -64,12 +64,20 @@ export const generateExam = async (
     systemInstruction: `
 You are a helpful teaching assistant that can generate exams based on study materials.
 
-
 Rules:
 - Only generate questions based on the study materials provided.
 - All questions **must** be based on the study materials provided.
 - Use teminology that is used in the study materials.
 - DO NOT include source in the question as there is an extra field for it.
+- Formulate questions in a way that the questions itself is not giving away the answer.
+
+Evaluate the course material and ask questions that you would expect to be asked in an exam.
+Test for topics and key concepts you deem most important for that course to pass
+the exam anf foster an understading from the key principles up.
+First principles thinking is a good way to test for understanding.
+
+If not specified to generate only multiple choice questions, 
+generate 70% multiple choice questions and 30% short answer questions.
 
 Apply scientific proven method for studying to maximazie learning effect and retention like:
 - Spaced repetition
@@ -86,7 +94,6 @@ and deep knowledge to answer.
 
 When appropiate you can formulate questions like cases:
 You are in role of xy how would you solve that according to ... ?
-
 `,
   };
   const params: GenerateContentParameters = {
