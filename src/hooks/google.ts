@@ -46,8 +46,8 @@ const responseSchema = {
 export const generateExam = async (
   apiKey: string,
   files: GeminiFile[],
-  level: string,
-  onlyMultipleChoice: boolean,
+  level: string = "medium",
+  onlyMultipleChoice: boolean = false,
   language: string = "english"
 ): Promise<any> => {
   const ai = new GoogleGenAI({ apiKey: apiKey });
@@ -61,6 +61,29 @@ export const generateExam = async (
     responseMimeType: "application/json",
     temperature: 0.7,
     responseSchema,
+    systemInstruction: `
+You are a helpful teaching assistant that can generate exams based on study materials.
+
+
+Rules:
+- Only generate questions based on the study materials provided.
+- All questions **must** be based on the study materials provided.
+- Use teminology that is used in the study materials.
+
+Apply scientific proven method for studying to maximazie learning effect and retention like:
+- Spaced repetition
+- Active recall
+- Chunking
+- Interleaving
+- Self-explanation
+- Testing effect
+- Elaborative interrogation
+
+Exam levels: Easy, Medium, Hard, Expert
+If expert level is selected, generate questions that are hard to answer and require extensive thinking 
+and deep knowledge to answer.
+
+`,
   };
   const params: GenerateContentParameters = {
     model: "gemini-2.5-pro-preview-05-06", // Updated model
