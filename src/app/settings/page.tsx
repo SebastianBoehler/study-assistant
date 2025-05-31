@@ -59,6 +59,7 @@ export default function SettingsPage() {
             >
               <option value="english">English</option>
               <option value="german">German</option>
+              <option value="german_sächsisch">German (Sächsisch)</option>
               <option value="spanish">Spanish</option>
               <option value="french">French</option>
               <option value="italian">Italian</option>
