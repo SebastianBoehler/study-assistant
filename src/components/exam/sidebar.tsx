@@ -1,6 +1,5 @@
 'use client';
 
-/* eslint-disable @next/next/no-invalid-props-serialization */
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { FileUpload } from '@/components/ui/fileUpload';
