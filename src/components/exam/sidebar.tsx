@@ -1,5 +1,6 @@
 'use client';
 
+/* eslint-disable @next/next/no-invalid-props-serialization */
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { FileUpload } from '@/components/ui/fileUpload';
@@ -28,6 +29,18 @@ export function Sidebar({
   const [level, setLevel] = useState<string>('medium');
   const [onlyMultipleChoice, setOnlyMultipleChoice] = useState<boolean>(false);
   
+  const handleFilesSelected = async (files: File[]) => {
+    await onFilesSelected(files);
+  };
+
+  const handleRemoveFile = (index: number) => {
+    onRemoveFile(index);
+  };
+
+  const handleGenerateExam = async () => {
+    await onGenerateExam(level, onlyMultipleChoice);
+  };
+  
   return (
     <div className="flex flex-col md:h-full">
       <div className="pb-6 border-b border-slate-200">
@@ -37,10 +50,10 @@ export function Sidebar({
       </div>
       
       <div className="flex-1 md:overflow-auto py-6">
-        <FileUpload onFilesSelected={onFilesSelected} />
+        <FileUpload onFilesSelected={handleFilesSelected} />
         
         <div className="mt-6">
-          <FileList files={files} onRemove={onRemoveFile} />
+          <FileList files={files} onRemove={handleRemoveFile} />
         </div>
         
         <div className="mt-6">
@@ -76,7 +89,7 @@ export function Sidebar({
       
       <div className="pt-4 border-t border-slate-200">
         <Button
-          onClick={() => onGenerateExam(level, onlyMultipleChoice)}
+          onClick={handleGenerateExam}
           isLoading={isGenerating}
           disabled={files.length === 0 || files.some(f => f.state !== FileState.ACTIVE) || !hasApiKey}
           className="w-full py-2"

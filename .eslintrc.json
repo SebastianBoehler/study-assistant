@@ -1,0 +1,7 @@
+{
+  "extends": "next/core-web-vitals",
+  "rules": {
+    "@next/next/no-invalid-props-serialization": "off",
+    "@next/next/no-async-client-component": "off"
+  }
+}

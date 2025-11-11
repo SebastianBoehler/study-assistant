@@ -2,7 +2,7 @@
 
 import { useState, useContext } from 'react';
 import { QuestionDisplay } from '@/components/exam/questionDisplay';
-import { Sidebar } from './sidebar'
+import { Sidebar } from '@/components/exam/sidebar';
 import { uploadFile, generateExam } from '@/hooks/google';
 import { FileState, File as GeminiFile } from '@google/genai';
 import { ApiKeyContext } from '@/context/ApiKeyContext';
@@ -12,7 +12,7 @@ export default function Home() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [examData, setExamData] = useState<any>(null);
   const [error, setError] = useState<string>('');
-  const { apiKey, language } = useContext(ApiKeyContext);
+  const { apiKey, language, temperature, customPrompt } = useContext(ApiKeyContext);
 
   const handleFilesSelected = async (newFiles: File[]) => {
     setFiles(prev => [...prev, ...newFiles.map(file => ({
@@ -56,7 +56,7 @@ export default function Home() {
     setError('');
 
     try {
-      const result = await generateExam(apiKey, uploadedFiles, level, onlyMultipleChoice, language);
+      const result = await generateExam(apiKey, uploadedFiles, level, onlyMultipleChoice, language, temperature, customPrompt);
       console.log(result);
       setExamData(result);
     } catch (err) {

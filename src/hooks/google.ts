@@ -48,7 +48,9 @@ export const generateExam = async (
   files: GeminiFile[],
   level: string = "medium",
   onlyMultipleChoice: boolean = false,
-  language: string = "english"
+  language: string = "english",
+  temperature: number = 0.5,
+  customPrompt: string = ""
 ): Promise<any> => {
   const ai = new GoogleGenAI({ apiKey: apiKey });
   const contents = createUserContent([
@@ -59,10 +61,12 @@ export const generateExam = async (
   console.log(contents, files);
   const config: GenerateContentConfig = {
     responseMimeType: "application/json",
-    temperature: 0.8,
+    temperature: temperature,
     responseSchema,
     systemInstruction: `
 You are a helpful teaching assistant that can generate exams based on study materials.
+
+${customPrompt ? `Additional instructions: ${customPrompt}\n` : ''}
 
 Rules:
 - Only generate questions based on the study materials provided.
@@ -73,7 +77,7 @@ Rules:
 
 Evaluate the course material and ask questions that you would expect to be asked in an exam.
 Test for topics and key concepts you deem most important for that course to pass
-the exam anf foster an understading from the key principles up.
+the exam and foster an understading from the key principles up.
 First principles thinking is a good way to test for understanding.
 
 If not specified to generate only multiple choice questions, 
