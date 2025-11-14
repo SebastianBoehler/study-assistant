@@ -12,7 +12,7 @@ export default function Home() {
   const [isGenerating, setIsGenerating] = useState(false);
   const [examData, setExamData] = useState<any>(null);
   const [error, setError] = useState<string>('');
-  const { apiKey, language, temperature, customPrompt } = useContext(ApiKeyContext);
+  const { apiKey, language, temperature, customPrompt, questionCount } = useContext(ApiKeyContext);
 
   const handleFilesSelected = async (newFiles: File[]) => {
     setFiles(prev => [...prev, ...newFiles.map(file => ({
@@ -56,7 +56,7 @@ export default function Home() {
     setError('');
 
     try {
-      const result = await generateExam(apiKey, uploadedFiles, level, onlyMultipleChoice, language, temperature, customPrompt);
+      const result = await generateExam(apiKey, uploadedFiles, level, onlyMultipleChoice, language, temperature, customPrompt, questionCount);
       console.log(result);
       setExamData(result);
     } catch (err) {

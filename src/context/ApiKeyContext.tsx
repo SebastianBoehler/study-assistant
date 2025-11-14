@@ -5,16 +5,19 @@ const localStorageKey = '%studyAssistantApiKey%';
 const localStorageLanguageKey = '%studyAssistantLanguage%';
 const localStorageTemperatureKey = '%studyAssistantTemperature%';
 const localStorageCustomPromptKey = '%studyAssistantCustomPrompt%';
+const localStorageQuestionCountKey = '%studyAssistantQuestionCount%';
 
 interface ApiKeyContextType {
   apiKey: string;
   language: string;
   temperature: number;
   customPrompt: string;
+  questionCount: number;
   setApiKey: (key: string) => void;
   setLanguage: (language: string) => void;
   setTemperature: (temperature: number) => void;
   setCustomPrompt: (prompt: string) => void;
+  setQuestionCount: (count: number) => void;
 }
 
 export const ApiKeyContext = createContext<ApiKeyContextType>({
@@ -22,10 +25,12 @@ export const ApiKeyContext = createContext<ApiKeyContextType>({
   language: '',
   temperature: 0.5,
   customPrompt: '',
+  questionCount: 40,
   setApiKey: () => {},
   setLanguage: () => {},
   setTemperature: () => {},
   setCustomPrompt: () => {},
+  setQuestionCount: () => {},
 });
 
 export const ApiKeyProvider = ({ children }: { children: ReactNode }) => {
@@ -33,6 +38,7 @@ export const ApiKeyProvider = ({ children }: { children: ReactNode }) => {
   const [language, setLanguageState] = useState<string>('english');
   const [temperature, setTemperatureState] = useState<number>(0.5);
   const [customPrompt, setCustomPromptState] = useState<string>('');
+  const [questionCount, setQuestionCountState] = useState<number>(40);
 
   useEffect(() => {
     const storedKey = typeof window !== 'undefined' ? localStorage.getItem(localStorageKey) : null;
@@ -43,6 +49,8 @@ export const ApiKeyProvider = ({ children }: { children: ReactNode }) => {
     if (storedTemperature) setTemperatureState(parseFloat(storedTemperature));
     const storedCustomPrompt = typeof window !== 'undefined' ? localStorage.getItem(localStorageCustomPromptKey) : null;
     if (storedCustomPrompt) setCustomPromptState(storedCustomPrompt);
+    const storedQuestionCount = typeof window !== 'undefined' ? localStorage.getItem(localStorageQuestionCountKey) : null;
+    if (storedQuestionCount) setQuestionCountState(parseInt(storedQuestionCount, 10));
   }, []);
 
   const setApiKey = (key: string) => {
@@ -65,8 +73,13 @@ export const ApiKeyProvider = ({ children }: { children: ReactNode }) => {
     localStorage.setItem(localStorageCustomPromptKey, prompt);
   };
 
+  const setQuestionCount = (count: number) => {
+    setQuestionCountState(count);
+    localStorage.setItem(localStorageQuestionCountKey, count.toString());
+  };
+
   return (
-    <ApiKeyContext.Provider value={{ apiKey, language, temperature, customPrompt, setApiKey, setLanguage, setTemperature, setCustomPrompt }}>
+    <ApiKeyContext.Provider value={{ apiKey, language, temperature, customPrompt, questionCount, setApiKey, setLanguage, setTemperature, setCustomPrompt, setQuestionCount }}>
       {children}
     </ApiKeyContext.Provider>
   );

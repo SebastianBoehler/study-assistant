@@ -50,11 +50,14 @@ export const generateExam = async (
   onlyMultipleChoice: boolean = false,
   language: string = "english",
   temperature: number = 0.5,
-  customPrompt: string = ""
+  customPrompt: string = "",
+  questionCount: number = 40
 ): Promise<any> => {
   const ai = new GoogleGenAI({ apiKey: apiKey });
   const contents = createUserContent([
-    `Generate an exam with at least 40 questions in ${language} for ${level} level. ${onlyMultipleChoice ? "Only multiple choice questions." : ""}`,
+    `Generate an exam with at least ${questionCount} questions in ${language} for ${level} level. ${
+      onlyMultipleChoice ? "Only multiple choice questions." : ""
+    }`,
     // map files
     ...files.map((f) => createPartFromUri(f.uri!, f.mimeType!)),
   ]);
@@ -66,7 +69,7 @@ export const generateExam = async (
     systemInstruction: `
 You are a helpful teaching assistant that can generate exams based on study materials.
 
-${customPrompt ? `Additional instructions: ${customPrompt}\n` : ''}
+${customPrompt ? `Additional instructions: ${customPrompt}\n` : ""}
 
 Rules:
 - Only generate questions based on the study materials provided.

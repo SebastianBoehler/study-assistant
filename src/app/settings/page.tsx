@@ -6,24 +6,27 @@ import { ApiKeyContext } from '@/context/ApiKeyContext';
 import { Button } from '@/components/ui/button';
 
 export default function SettingsPage() {
-  const { apiKey, setApiKey, language, setLanguage, temperature, setTemperature, customPrompt, setCustomPrompt } = useContext(ApiKeyContext);
+  const { apiKey, setApiKey, language, setLanguage, temperature, setTemperature, customPrompt, setCustomPrompt, questionCount, setQuestionCount } = useContext(ApiKeyContext);
   const [key, setKey] = useState<string>(apiKey);
   const [languageState, setLanguageState] = useState<string>(language);
   const [temperatureState, setTemperatureState] = useState<number>(temperature);
   const [customPromptState, setCustomPromptState] = useState<string>(customPrompt);
+  const [questionCountState, setQuestionCountState] = useState<number>(questionCount);
 
   useEffect(() => {
     setKey(apiKey);
     setLanguageState(language);
     setTemperatureState(temperature);
     setCustomPromptState(customPrompt);
-  }, [apiKey, language, temperature, customPrompt]);
+    setQuestionCountState(questionCount);
+  }, [apiKey, language, temperature, customPrompt, questionCount]);
 
   const handleSave = () => {
     setApiKey(key);
     setLanguage(languageState);
     setTemperature(temperatureState);
     setCustomPrompt(customPromptState);
+    setQuestionCount(questionCountState);
     // Consider a more robust notification system in a real app
     alert('Settings saved!');
   };
@@ -80,6 +83,23 @@ export default function SettingsPage() {
         {/* Model Settings */}
         <section className="mb-10">
           <h2 className="text-2xl font-semibold mb-6 text-slate-700">Model Settings</h2>
+          <div className="mb-6">
+            <label htmlFor="question-count" className="block text-sm font-medium text-slate-700 mb-2">
+              Number of Questions: {questionCountState}
+            </label>
+            <input
+              id="question-count"
+              type="number"
+              min="1"
+              max="100"
+              value={questionCountState}
+              onChange={(e) => setQuestionCountState(Math.max(1, Math.min(100, parseInt(e.target.value) || 1)))}
+              className="w-full max-w-md px-3 py-2 border border-slate-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500"
+            />
+            <p className="text-sm text-slate-600 mt-2 max-w-md">
+              Number of questions to generate in the exam. Range: 1-100 questions.
+            </p>
+          </div>
           <div className="mb-6">
             <label htmlFor="temperature-slider" className="block text-sm font-medium text-slate-700 mb-2">
               Temperature: {temperatureState.toFixed(2)}
