@@ -104,7 +104,7 @@ You are in role of xy how would you solve that according to ... ?
 `,
   };
   const params: GenerateContentParameters = {
-    model: "gemini-2.5-pro-preview-05-06", // Updated model
+    model: "models/gemini-3-flash-preview",
     contents,
     config,
   };
