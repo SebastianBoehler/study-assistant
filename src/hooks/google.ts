@@ -25,7 +25,7 @@ const responseSchema = {
           },
           correctOptionIndex: {
             type: "INTEGER",
-            description: "Index (0-3) of the correct option for multiple choice questions",
+            description: "Index (0-3) of the correct option, required for multiple choice questions",
           },
           modelAnswer: {
             type: "STRING",
@@ -36,7 +36,7 @@ const responseSchema = {
             description: "Source information in the format 'PDF Name (page X)' where X is the page number",
           },
         },
-        required: ["id", "type", "question", "source"],
+        required: ["id", "type", "question", "source", "correctOptionIndex"],
       },
     },
   },
